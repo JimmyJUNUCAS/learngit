@@ -1,0 +1,63 @@
+5分支管理
+为了完成一个任务，多人参与，每个人完成自己部分，每个人按照自己的节奏来提交，开发完成后，一次性合并到原来的分支上，这样，既安全，又不影响别人工作。
+5.1创建/合并/删除分支
+	#创建分支
+	git中主分支，称为master分支。HEAD指向当前分支。
+	新建一个dev分支，其实是创建一个指针dev，指向当前的master提交，再把HEAD指向dev，表示当前分支切换到dev上。
+	创建一个分支，原理是是增加一个指针，改变HEAD指针的指向。
+	之后对git的修改，都是在dev上完成，并不会修改master分支的内容。
+	$git checkout -b dev #-b表示创建并切换相当于执行两步操作
+	$git branch dev      #创建dev分支
+	$git checkout dev    #切换dev分支
+	$git branch          #查看当前分支
+	* dev
+	  master             #列出所有分支，当前分支前会有*标号
+	#合并分支
+	当dev分支的内容完成后，希望将二者融合，把master指向dev当前提交，就完成了合并。
+	$git chechout master #切换当前账户到master
+	$git merge dev       #合并指定分支（dev）到当前分支（master）；合并模式默认为Fast-Forward，即把master指向dev当前提交
+	#删除分支
+	$git branch -d dev   #删除dev分支
+5.2解决冲突
+	git无法自动合并冲突时，需要手动的解决冲突。解决冲突后，再提交，合并完成。
+	用git log --graph命令查看分支合并图。
+	
+5.3分支管理策略
+	合并分支，git使用fast forward模式。这种模式会丢掉分支信息。
+	强制禁用fast forward，git会在merger时产生新的commit，从分支历史上可以看出分支信息。
+	$git merge --no--ff -m “merge with no-ff” dev #禁用快速合并模式进行合并，-m 把commit描述写进去。
+	分支管理策略
+	主分支稳定，dev分支不稳定，到某个时刻，把dev分支合并到master分支。
+5.4Bug分支
+	在git中Bug修复使用Bug分支来修复，每个bug通过一个临时分支来修复，修复后，将临时分支删除。
+	Git Stash 功能
+	将当前工作现场存储起来，等以后恢复现场继续工作。Git stash。当前工作区没有完成，需要处理临时任务，则将当前工作临时保存起来（存盘），先处理临时工作。
+	处理完工作之后，可以使用git stash apply 来恢复，此种方式Stash内容并不删除，git Stash drop来删除
+	另一种方式是git Stash pop，恢复同时将Stash内容也删除。
+	$git stash       #将当前工作区存盘
+	$git stash apply #恢复当前存盘
+	$git stash drop  #将存盘内容删除
+	$git stash pop   #恢复同时删除stash
+	多次stash，恢复时，先用git Stash list查看，然后恢复指定的stash
+	$git stash apply stash@{0}
+5.5Feature 分支
+	软件开发，添加一个新的功能，不希望实验性质的代码把主分支打乱，当添加一个新功能时，新建一个feature分支，在上面开发，完成后，合并。
+	新建一个分支 $git checkout -b feature-vulcan 完成创建一个新的分支的任务
+	开发完毕 ，将此开发完毕的文档提交到git中
+	$ git add vulcan.py
+	$ git status
+	$ git commit -m "add feature vulcan"
+	合并分支，feature分支与bug分支合并类似。
+	先切换到主分支 $ git chechout master
+	进行融合 $ git merge --no--ff-m “merge feature vulcan”feature-vulcan
+	融合后，可以将分支删除 $ git branch -d feature-vulcan 
+	强行删除 $ git branch -D feature-vulcan
+5.6多人协作
+	从远程仓库克隆后，git自动将本地master分支与远程master分支对应起来，远程仓库默认名为origin
+    $git remote origin	查看远程信息
+	$git remote -v      查看远程信息详细版本
+	$git push origin master 推送分支，把该分支推送到远程库
+	$git push origin dev    
+	哪些分支需要推动的远程库：1 master分支 2dev分支开发分支 不需要：1bug分支 2feature分支
+	本地和远程都有修改，需要使用pull命令将远程修改同步到本地。之后将本地修改分支与远程修改分支合并。
+	git branch --set-upstream branch-name origin/branch-name #本地分支与远程分支的链接关系没有创建，使用命令创建

@@ -1,0 +1,18 @@
+##日常基本操作##
+准备：初始化GIT仓库
+$cd user1@~/testgitt          #切换到GIT仓库的目录中
+[user1@~/testgitt]$git init   #初始化仓库
+第一步：登录自己账号
+[user1@~/testgitt]$git config --global user.email "JIWEIJUN_WHU@126.com"
+[user1@~/testgitt]$git config --global user.name "JIWEIJUN"
+第二步：添加文件
+[user1@~/testgitt]$git add readme.txt  #可以多次添加文件，一次可以添加多个
+第三步：添加更改命令“”内内容为此次更改的内容，可依据不同的更改进行修改
+[user1@~/testgitt]$git commit -m "add distributed" #提交本次修改到GIT中
+##日常可选操作##
+查看GIT仓库状态
+[user1@~/testgitt]$git status
+查看修改的内容
+[user1@~/testgitt]$git diff readme.txt
+
+

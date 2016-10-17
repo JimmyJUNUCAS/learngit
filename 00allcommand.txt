@@ -1,0 +1,52 @@
+[user1@~]$mkdir testgitt          #创建目录
+[user1@~/testgitt]$cd testgitt    #切换到目录
+[user1@~/testgitt]$pwd            #显示整个目录名
+[user1@~/testgitt]$git init       #初始化git
+[user1@~/testgitt]$git config --global user.email "JIWEIJUN_WHU@126.com"
+[user1@~/testgitt]$git config --global user.name "JIWEIJUN"
+[user1@~/testgitt]$git add readme.txt  #可以多次添加文件，一次可以添加多个
+[user1@~/testgitt]$git commit -m "add distributed" #提交本次修改到GIT中
+[user1@~/testgitt]$git status                #查看git状态
+[user1@~/testgitt]$git diff readme.txt       #比较文件不同
+[user1@~/testgitt]$git reset --hard HEAD^    #切换版本，回到上一版本
+[user1@~/testgitt]$git reset --hard HEAD^^   #切换版本，回到上二版本
+[user1@~/testgitt]$git reset --hard HEAD~100 #切换版本，回到上一百版本
+[user1@~/testgitt]$git reset --hard c4f2d    #切换到对应的版本号
+[user1@~/testgitt]$git log                   #显示历史版本
+[user1@~/testgitt]$git log --pretty=oneline  #在一行显示历史版本
+[user1@~/testgitt]$git reflog                #显示版本号
+[user1@~/testgitt]$git rm test.txt           #删除版本库中文件
+[user1@~/testgitt]$git reset HEAD readme.txt #将暂存区文件撤回至工作区
+[user1@~/testgitt]$git checkout --readme.txt #用版本库文件替换替换工作区文件
+[user1@~/testgitt]$git remote add origin git@github.com:JimmyJUNUCAS/getskills.git； #将本地库与远程git库关联
+[user1@~/testgitt]$git push -u origin master #第一次推送master分支的所有内容
+[user1@~/testgitt]$git push origin master    #非第一次推送，不用推送全部，推送最新的修改即可
+[user1@~/testgitt]$git clone git@github.com:JimmyJUNUCAS/getskills.git               #从远程库clone
+[user1@~/testgitt]$git branch                #查看分支
+[user1@~/testgitt]$git branch <name>         #创建分支
+[user1@~/testgitt]$git checkout <name>       #切换分支
+[user1@~/testgitt]$git checkout -b <name>    #创建+切换分支
+[user1@~/testgitt]$git merge <name>          #合并分支到当前分支
+[user1@~/testgitt]$git branch -d <name>      #删除分支
+[user1@~/testgitt]$git merge --no--ff -m “merge with no-ff” dev #禁用快速合并模式合并分支，同时提交commit记录使用非快速合并模式合并
+[user1@~/testgitt]$git stash       			 #将当前工作区存盘
+[user1@~/testgitt]$git stash apply           #恢复当前存盘
+[user1@~/testgitt]$git stash drop            #将存盘内容删除
+[user1@~/testgitt]$git stash pop             #恢复同时删除stash
+[user1@~/testgitt]$git stash apply stash@{0} #采用指定版本的Stash
+[user1@~/testgitt]$git checkout -b feature-vulcan #切换并创建特征分支
+[user1@~/testgitt]$git branch -d feature-vulcan   #融合后，可以将分支删除 
+[user1@~/testgitt]$git branch -D feature-vulcan   #强行删除
+[user1@~/testgitt]$git remote origin	          #查看远程信息
+[user1@~/testgitt]$git remote -v                  #查看远程信息详细版本
+[user1@~/testgitt]$git push origin master         #推送分支，把该分支推送到远程库
+[user1@~/testgitt]$git branch --set-upstream branch-name origin/branch-name #本地分支与远程分支的链接关系没有创建，使用命令创建
+[user1@~/testgitt]$git tag  v1.0                  #创建标签
+[user1@~/testgitt]$git tag                        #查看所有标签
+[user1@~/testgitt]$git tag v1.0 6224937           #版本序号 将对应的版本序号打上对应的标签
+[user1@~/testgitt]$git tag -a v1.0 -m '标签'      #指定标签的信息
+[user1@~/testgitt]$git tag -d v1.0                #删除标签
+[user1@~/testgitt]$git push origin v1.0           #推送标签到远程
+[user1@~/testgitt]$git push origin --tags         #推送所有标签到远程
+[user1@~/testgitt]$git tag -d v1.0                #删除远程标签，首先删除本地标签
+[user1@~/testgitt]$git push origin :refs/tags/v1. #之后将远程标签删除

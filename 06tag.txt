@@ -1,0 +1,13 @@
+创建标签
+	$git tag  v1.0 创建标签
+	$git tag 查看所有标签
+	$git tag v1.0 6224937版本序号 将对应的版本序号打上对应的标签
+	$git tag -a v1.0 -m '这是一个标签' 指定标签的信息
+	
+删除标签	
+	$git tag -d v1.0                 删除标签
+	$git push origin v1.0            推送标签到远程
+	$git push origin --tags          推送所有标签到远程
+	删除远程标签
+	$git tag -d v1.0                 删除远程标签，首先删除本地标签
+	$git push origin :refs/tags/v1.0 之后将远程标签删除

@@ -1,0 +1,65 @@
+##一版本控制原理##
+	1.git可以记录版本变化的文件格式。
+		1.1文本文件：只能追踪“文本文件”的改动，比如TXT文件，网页，所有程序代码等。
+		1.2二进制文件：对于图像、视频这些二进制文件，不能记录更改的具体内容。word是二进制格式，不能够被记录改动。
+	文本是有编码的，选择编码时可以选择UTF-8，既没有冲突，又能被所有平台支持。
+	不要使用Windows平台自带的“记事本”编辑任何文本。因为设定的编码模式有问题。使用Notepad++即可。
+
+	2工作区/版本库/暂存区
+		工作区：就是你在电脑里能看到的目录，比如文件夹testgitt就是一个工作区。（working directory）
+		版本库：工作区有一个隐藏目录.git，不算工作区，而是git的版本库。（Repository）
+		暂存区：GIT版本库里面存了很多东西，其中最重要的是称为stage的暂存区，还有git自动创建的第一个分支master，以及指向master的指针HEAD。
+	工作区--版本库--暂存区
+
+	3版本库中提交文件的工作原理
+	前面讲的将文件往git版本库里面添加的时候需要两步。
+		第一步，用git add把文件添加进去，实际上就是将【工作区】文件放在的【暂存区】（stage）中。
+		第二步，用git commit提交更改，实际上就是把【暂存区】的所有内容提交到【当前分支】。
+	需要提交的 文件修改 先存放在 暂存区 。等所有文件修改都提交完毕后，一次性提交到master。
+
+##二版本控制操作##
+1管理修改
+	GIT比其他版本管理软件优秀的原因是git记录的是文件的修改。
+	[user1@~/testgitt]$git add    #每对文件进行一次修改，就需要进行一次git add操作，将本次修改提交到版本库。
+	[user1@~/testgitt]$git commit #结束文档的全部修改后，进行git commit操作，将所有的 版本修改 提交到分支中。
+
+2版本回溯
+	版本控制是记录版本的版本的变化，以及能够回溯到过去版本。
+	[user1@~/testgitt]$git reset --hard HEAD^
+	#HEAD 指的是当前的版本，^指的是回退到前一个版本，^^回退到前两个版本，HEAD~100，回退到前一百个版本。
+	[user1@~/testgitt]$git reset --hard c4f2d
+	#版本之间穿梭，在知道版本号的情况下。
+	查看历史版本版本号
+	[user1@~/testgitt]$git log #显示历史版本
+	[user1@~/testgitt]$git log --pretty=oneline #在一行显示历史版本
+
+3版本回归
+	在版本回溯之后，可能需要重新回到现在版本。使用以下命令查看未来版本号。
+	[user1@~/testgitt]$git reflog #显示版本号
+	[user1@~/testgitt]$git reset --hard c4f2d #回归未来版本
+	准备穿梭前，用git log    可以查看提交历史，以便确定要回退到哪个版本。
+	要重返未来，用git reflog 查看命令历史，以便确定要回到未来的哪个版本。
+
+4撤销修改
+	当你对文件进行修改后，还没有进行git add之前，想要撤销修改，可以进行git checkout 操作。
+	#在git add之前。使用git checkout --file，丢弃工作区的修改。文件回到初始状态（修改前）。且工作区没有修改记录。
+	[user1@~/testgitt]$git checkout -- readme.txt 
+	#在git add之后。使用git reset HEAD file，将提交到暂存区的文件撤销回工作区，使用git checkout --file，丢弃工作区的修改。
+	[user1@~/testgitt]$git reset HEAD readme.txt
+	[user1@~/testgitt]$git checkout -- readme.txt
+	#在git commit之后。使用git reset --hard HEAD^，回溯到上一版本。
+	[user1@~/testgitt]$git reset --hard HEAD^
+git checkout --file #丢弃工作区的修改，如何丢弃：用版本库中的版本替换工作区中版本。
+git reset HEAD file #将提交到暂存区的文件撤销回工作区
+
+5删除文件
+	在文件管理器中删除文档，或者使用命令行删除文档$rm test.txt
+	此时工作区与版本库的内容不相符，有删对了和删错了两种情况。
+	1删对了，则需要在版本库将文件也删除，使用git rm操作，并git commit操作
+	[user1@~/testgitt]$git rm test.txt #删除版本库中文件
+	[user1@~/testgitt]$git commit      #提交此次操作
+	2删错了，使用版本库中文档放到工作区，使用git checkout --test.txt
+	[user1@~/testgitt]$git checkout --test.txt #使用版本库中的文件替换工作区中文件。
+git checkout 操作是用版本库里的版本替换工作区的版本。无论工作区是修改还是删除都可以一键还原。
+
+

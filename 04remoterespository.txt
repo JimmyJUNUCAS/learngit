@@ -1,0 +1,23 @@
+远程仓库
+	Git 可以远程，将版本库提交到远程服务器上，在其他客户端需要使用此版本库时则可以使用克隆命令。
+	GIThub做为git版本库托管的一个网站。可以使用github对现有的版本库进行管理。
+	本地GIT仓库与github仓库之间的传输通过SSH加密
+		第一步，创建SSH Key。打开shell输入
+			$ssh-keygen -t -rsa -C"JIWEIJUN_WHU@126.com"
+			创建成功后，用户主目录里面找到.ssh目录，里面有id_rsa（私钥，不能泄露）和id_rsa.pub（公钥）两个文件，这两个就是SSH Key的密钥对。
+		第二步，登录Github，打开“Account Settings”，“SSH Keys”页面。
+			点击“Add SSH Key”，填上任意Title，在key文本框里黏贴id_ras.pub文件里面的内容。点击“Add key”就可以看到已经添加的key。
+			GIT需要SSH Key是因为github需要识别是否是你进行的推送。
+	关联一个远程库
+		$git remote add origin git@github.com:JimmyJUNUCAS/getskills.git；
+		注意此时应该切换到当前版本库目录。
+	将本地内容推送到远程库
+		$git push -u origin master #第一次推送master分支的所有内容
+		$git push origin master #非第一次推送，不用推送全部，推送最新的修改即可
+	从远程库克隆
+		首先在github上面创建出一个版本库，之后使用命令行在本地clone此版本库就可以进行修改。
+		Clone之后的文件夹存在指定的目录下。Git clone git@github.com:JimmyJUNUCAS/getskills.git
+		GIT支持多种协议，默认的git://使用ssh，但也可以使用http://协议。通过ssh支持的原生git协议速度最快。
+
+	分布式版本系统的最大的好处之一是在本地工作完全不用考虑远程库的存在，没有联网也可以正常进行，当联网之后将修改进行提交就可以了。
+	
